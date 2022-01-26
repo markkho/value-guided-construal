@@ -86,10 +86,10 @@ $ make dev
 
 This creates a server at [http://localhost:22362](http://localhost:22362).
 Specific experiments can be demoed at the following links:
-- [Initial experiment (Exp 1)](http://localhost:22362/testexperiment?CONFIG_FILE=exp1.0-config.json)
-- [Up-front planning experiment (Exp 2)](http://localhost:22362/testexperiment?CONFIG_FILE=exp2.0-config.json)
-- [Critical maze experiment with awareness probes (Exp 3)](http://localhost:22362/testexperiment?CONFIG_FILE=exp3.0-config.json&condition=0)
-- [Critical maze experiment with recall probes (Exp 3)](http://localhost:22362/testexperiment?CONFIG_FILE=exp3.0-config.json&condition=1)
+- [Initial experiment (Exp 1)](http://localhost:22362/testexperiment?CONFIG_FILE=exp1.0-config.json.zip)
+- [Up-front planning experiment (Exp 2)](http://localhost:22362/testexperiment?CONFIG_FILE=exp2.0-config.json.zip)
+- [Critical maze experiment with awareness probes (Exp 3)](http://localhost:22362/testexperiment?CONFIG_FILE=exp3.0-config.json.zip&condition=0)
+- [Critical maze experiment with recall probes (Exp 3)](http://localhost:22362/testexperiment?CONFIG_FILE=exp3.0-config.json.zip&condition=1)
 - [Process-tracing experiment with initial mazes (Exp 4a)](http://localhost:22362/testexperiment?CONFIG_FILE=config-4a.json.zip&page=3)
 - [Process-tracing experiment with critical mazes (Exp 4b)](http://localhost:22362/testexperiment?CONFIG_FILE=config-4b.json.zip&page=3)
 - [Perceptual control with initial mazes (Exp 5a)](http://localhost:22362/testexperiment?CONFIG_FILE=config-5a.json.zip&page=2)
