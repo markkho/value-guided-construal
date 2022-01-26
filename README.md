@@ -4,6 +4,7 @@ This repository contains code for
 the paper
 **People construct simplified models to plan**
 by Ho, Abel, Correa, Littman, Cohen, and Griffiths.
+
 It is organized into the following
 subdirectories:
 - `experiment.psiturkapp` contains
@@ -15,6 +16,8 @@ trials
 - `vgc_project` is a python package that `analyses` and `modeling` depend on
 - `modeling` includes modeling code that is not directly
 related to the experiments
+
+It is also linked to [this](https://osf.io/zpq69) OSF repository.
 
 ## Set up
 The project uses Python 3 (3.7 definitely works, other versions may or may not work).
