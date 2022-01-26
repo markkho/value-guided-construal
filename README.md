@@ -59,9 +59,9 @@ You may have to set the `PYTHONHASHSEED` variable
 to 0 to replicate certain analyses. See
 [here](https://stackoverflow.com/questions/58067359/is-there-a-way-to-set-pythonhashseed-for-a-jupyter-notebook-session).
 
-### Analyses with `lmer`
+### Analyses with `lme4`
 Some of the hierarchical generalized linear regression analyses
-are done using the `lmer` package in R.
+are done using the `lme4` package in R.
 The `vgc_project.r` module provides wrappers that
 interface with R using the `rpy2` package
 (see [here](https://rpy2.github.io/)). 
