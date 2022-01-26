@@ -2,7 +2,7 @@
 
 This repository contains code for
 the paper
-**People construct simplified models to plan**
+**People construct simplified mental representations to plan**
 by Ho, Abel, Correa, Littman, Cohen, and Griffiths.
 
 It is organized into the following
