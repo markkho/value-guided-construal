@@ -12,8 +12,7 @@ psiturk framework (see [here](https://psiturk.org/)).
 - `experiments` includes data and code for generating experimental
 trials
 - `analyses` includes notebooks and scripts for analyses in the paper
-- `vgc_project` is a python package that
-`analyses` and `modeling` depend on
+- `vgc_project` is a python package that `analyses` and `modeling` depend on
 - `modeling` includes modeling code that is not directly
 related to the experiments
 
