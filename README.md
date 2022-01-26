@@ -87,7 +87,7 @@ $ make dev
 ```
 
 This creates a server at [http://localhost:22362](http://localhost:22362).
-Specific experiments can be demoed at the following links:
+Specific experiments can be demoed at the following links once you have the server running:
 - [Initial experiment (Exp 1)](http://localhost:22362/testexperiment?CONFIG_FILE=exp1.0-config.json.zip)
 - [Up-front planning experiment (Exp 2)](http://localhost:22362/testexperiment?CONFIG_FILE=exp2.0-config.json.zip)
 - [Critical maze experiment with awareness probes (Exp 3)](http://localhost:22362/testexperiment?CONFIG_FILE=exp3.0-config.json.zip&condition=0)
