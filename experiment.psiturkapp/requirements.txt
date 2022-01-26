@@ -1,0 +1,2 @@
+PsiTurk>=2,<3"
+psycopg2==2.8.4

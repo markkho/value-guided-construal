@@ -1,0 +1,2 @@
+web: python bin/herokuapp.py
+--timeout 300

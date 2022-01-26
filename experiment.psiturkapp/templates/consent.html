@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Psychology Experiment - Informed Consent Form</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
+    <script language="javascript", src="static/lib/jszip.min.js", type="text/javascript"></script>
+    <script language="javascript", src="static/lib/jszip-utils.min.js", type="text/javascript"></script>
+    <script src="static/lib/jquery-min.js" type="text/javascript"> </script>
+    <script type="text/javascript">
+    function onexit() {
+      self.close();
+    }
+    </script>
+  </head>
+  <body>
+
+    <div id="container-consent" class="container-flex">
+      <div id="consent">
+        <div id="consent">
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    window.onload = async () => {
+        $("#agreement").hide()
+
+        /* Load exp configuration file */
+        window.searchParams = new URLSearchParams(location.search);
+        let CONFIG_FILE = searchParams.get("CONFIG_FILE") || "config.json.zip";
+        let CONFIG_LOCATION = "./static/config/"+CONFIG_FILE;
+        let config;
+        console.log("Loading configuration from: " + CONFIG_LOCATION)
+        if (CONFIG_FILE.split(".").slice(-1)[0] === "zip") {
+            let config_binary = await new Promise((resolve, reject) => {
+                JSZipUtils.getBinaryContent(CONFIG_LOCATION, function(err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+            config = await JSZip.loadAsync(config_binary);
+            config = await config.file("config.json").async("string")
+            config = JSON.parse(config) ;
+        }
+        else {
+            config = await fetch(CONFIG_LOCATION);
+            config = await config.json()
+        }
+
+        var consentContent = `
+            <h2>We need your consent to proceed</h2>
+            <hr />
+            <div class="legal well">
+
+              <p class="block-text">
+                You are being invited to take part in a research study. Before you decide to participate in this study, it is important that you understand why the research is being done and what it will involve. Please take the time to read the following information carefully. Please ask the researcher if there is anything that is not clear or if you need more information.
+              </p>
+
+              <h5>Purpose of the research:</h5>
+
+              <p class="block-text">
+                This study is designed to look at how people make decisions. In this task, you will be asked to make choices and answer questions related to those decisions.
+              </p>
+
+              <h5>Study Procedures</h5>
+
+              <p class="block-text">
+                In this experiment, you will be shown a grid, maze, or graph of edges and nodes containing objects that can be moved around with a mouse or the keyboard. The goal of the task is to move one or more of the objects into a new configuration.
+              </p>
+              <p class="block-text">
+                The answers you provide in the task may be used as stimuli for future participants. However, data that would identify you will not be shared with other participants.
+              </p>
+
+              <p class="block-text">
+                Your total expected time commitment for this study is: <b>${config.params.expectedTime}.</b>
+              </p>
+
+              <h5>Benefits and Risks</h5>
+
+              <p class="block-text">
+                There are no direct benefits to you as a participant; however, by furthering our understanding of human cognition, this research will benefit society by helping with the development of automated systems that can better solve problems that are computationally challenging, but that people can solve easily with little formal guidance.
+              </p>
+
+              <p class="block-text">
+                Risks associated with participation in this study are minimal. You may feel slight discomfort answering some questions, but you may refrain from answering any questions that make you uncomfortable and may withdraw your participation at any time even after completing the experiment without penalty.
+              </p>
+
+              <h5>Confidentiality</h5>
+
+              <p class="block-text">
+                We will not be asking for any personally identifying information, and we will handle responses as confidentially as possible. Your name, or your Worker IDs will never be tied to your responses on this survey. However, we cannot guarantee the confidentiality of information transmitted over the Internet. To minimize this risk, data containing anything that might be personally identifiable (e.g. Worker IDs) will be encrypted on transfer and storage and will only be accessible to qualified lab personnel. We will be keeping data collected as part of this experiment indefinitely. This anonymized data (containing neither Worker IDs nor IP addresses) may be shared with the scientific community.
+              </p>
+
+              <h5>Compensation</h5>
+
+              <p class="block-text">
+                For your participation, you will receive a base pay as well as a performance-dependent bonus.
+
+                If you are on MTurk and for any reason you do not complete the study (e.g. technical difficulties, or a desire to stop), we will only be able to pay you if you send an email through MTurk, or by emailing the researcher, Dr. Mark Ho, at mho@princeton.edu. If you have any questions about the study, feel free to contact Dr. Ho or the Principal Investigator, Thomas Griffiths, at tomg@princeton.edu.
+              </p>
+
+              <h5>Who to contact with questions</h5>
+
+              <p class="block-text">
+                <ul>
+                  <li>Principal Investigator:
+                    <div style="margin-left: 3rem;">
+                      Dr. Thomas Griffiths<br />
+                      Email: tomg@princeton.edu
+                    </div>
+                  </li>
+                  <li>If you have questions regarding your rights as a research subject, or if problems arise which you do not feel you can discuss with the Investigator, please contact the Institutional Review Board at:
+                    <div style="margin-left: 3rem;">
+                      Assistant Director, Research Integrity and Assurance<br />
+                      Phone: (609) 258-8543<br />
+                      Email: irb@princeton.edu
+                    </div>
+                  </li>
+                </ul>
+              </p>
+
+              <hr />
+
+              <p class="block-text">
+                I understand the information that was presented and that:
+                <ul>
+                  <li>My participation is voluntary, and I may withdraw my consent and discontinue participation in the project at any time.  My refusal to participate will not result in any penalty.</li>
+                  <li>I do not waive any legal rights or release Princeton University, its agents, or you from liability for negligence.</li>
+                </ul>
+              </p>
+
+              <p class="block-text">
+                I hereby give my consent to be the subject of your research.
+              </p>
+
+          </div>
+
+          <hr />
+          <h4>Do you understand and consent to these terms?</h4>
+          <br />
+
+          <center>
+            <button type="button" class="btn btn-primary btn-lg" onClick="window.location='/exp?hitId={{ hitid }}&assignmentId={{ assignmentid }}&workerId={{ workerid }}'">
+              <span class="glyphicon glyphicon-ok"></span> I agree
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-danger btn-lg" onClick="onexit()">
+              <span class="glyphicon glyphicon-ban-circle"></span> No thanks, I do not want to do this HIT
+            </button>
+          </center>
+        `
+        $("#consent").append(consentContent)
+        $("#agreement").show()
+    }
+  </script>
+</html>

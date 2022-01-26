@@ -1,0 +1,44 @@
+[HIT Configuration]
+title = Play Game (10-15 min) + up to $1.20 bonus
+description = Play a simple game
+amt_keywords = Psychology, Decision Making, Game
+lifetime = 24
+us_only = true
+approve_requirement = 95
+number_hits_approved = 100
+require_master_workers = false
+contact_email_on_error = mark.ho.cs@gmail.com
+ad_group = gridworld_planning
+psiturk_keywords = reinforcement learning, planning, gridworld
+organization_name = Princeton University
+browser_exclude_rule = MSIE, mobile, tablet
+allow_repeats = false
+
+[Database Parameters]
+database_url = sqlite:///participants.db
+table_name = my_experiment
+
+[Server Parameters]
+host = 0.0.0.0
+port = 22362
+cutoff_time = 30
+logfile = server.log
+loglevel = 1
+debug = false
+login_username = MYUSERNAME
+login_pw = MYPASSWORD
+threads = 1
+secret_key = 'SECRET'
+adserver_revproxy_host = {{ app_url }}
+recaptcha_key = SECRET
+
+[Task Parameters]
+experiment_code_version = version1
+num_conds = 40
+num_counters = 1
+
+[Shell Parameters]
+launch_in_sandbox_mode = true
+bonus_message = "Thanks for participating!"
+use_psiturk_ad_server = false
+ad_location = MY_AD_LOCATION
