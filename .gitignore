@@ -155,3 +155,6 @@ analyses/figures
 analyses/inputs
 analyses/results
 experiments/**/*config.json
+
+# make an exception for the psiturk static lib directory
+!experiment.psiturkapp/static/lib/
