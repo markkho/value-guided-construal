@@ -155,7 +155,7 @@ def global_lesion_analysis(
         llr_stat = -2*(h0 - h1)
         p = 1 - stats.chi2.cdf(llr_stat, df=df)
         p = pval_to_string(p)
-        return f"$\chi^2({df}) = {llr_stat:.2f}, {p}$"
+        return f"$\chi^2({df}) = {llr_stat:.2f}, p {p}$"
     def save_for_table(exp_name, filename):
         renamed = comp[['dAIC.FULL', 'lesioned_effect']].\
             set_index('lesioned_effect').\
@@ -271,7 +271,8 @@ def single_predictor_analysis(
     random_effects,
     predictor,
     rmods,
-    coeff_digits
+    coeff_digits,
+    normalized_predictor=False
 ) -> str:
     """
     Hierarchical GLM analysis with a predictor by itself.
@@ -288,7 +289,8 @@ def single_predictor_analysis(
     llr_stat = -2*(lesioned_model_res['loglik'] - model_res['loglik'])
     p = 1 - stats.chi2.cdf(llr_stat, df=1)
     coeff = [c for c in model_res['coefficients'] if c['effect'] == predictor][0]
-    summary = f"$\chi^2(1) = {llr_stat:.2f}, p  {pval_to_string(p)}$; $b = {round(coeff['estimate'], ndigits=coeff_digits)}$, S.E. $= {round(coeff['se'], ndigits=coeff_digits)}$"
+    coeff_letter = r"\beta" if normalized_predictor else "b"
+    summary = f"$\chi^2(1) = {llr_stat:.2f}, p  {pval_to_string(p)}$; ${coeff_letter} = {round(coeff['estimate'], ndigits=coeff_digits)}$, S.E. $= {round(coeff['se'], ndigits=coeff_digits)}$"
     return dotdict(
         log_likelihood_ratio_statistic=llr_stat,
         coefficient=coeff,
