@@ -20,7 +20,8 @@ related to the experiments
 It is also linked to [this](https://osf.io/zpq69) OSF repository.
 
 ## Set up
-The project uses Python 3 (3.7 definitely works, other versions may or may not work).
+The project uses Python 3 
+(everything works with 3.7).
 One way to use it is by setting up a virtualenv:
 ```
 $ virtualenv -p python3 env
