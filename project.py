@@ -55,6 +55,9 @@ files_to_zip = [
     "experiments/exp5b/config.json",
     "experiments/exp6a/config.json",
     "experiments/exp6b/config.json",
+
+    # gridsearch files
+    "analyses/dvgc-gridsearch/results/gridsearch.json",
 ]
 
 def zip_files():
@@ -84,9 +87,9 @@ notebooks = [
     "plot-grid-measure-figs.ipynb",
     "plot-critical-mazes.ipynb",
     "plot-pairwise-analyses.ipynb",
-    "plot-fitted-vgc.ipynb",
     "plot-qbin-figure.ipynb",
     "plot-global-lesion-tables.ipynb",
+    "dvgc-gridsearch.ipynb",
 ]
 ANALYSIS_DIR = "./analyses"
 

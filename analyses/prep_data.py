@@ -94,7 +94,9 @@ for grid, tile_array in mazes.items():
 model_preds = pd.DataFrame(model_preds)
 
 to_zscore = [
-    'vgc_weight',
+    # 'vgc_weight',
+    'static_vgc_weight',
+    'dynamic_vgc_weight',
     'log_traj_based_hitcount',
     'graph_based_hitcount',
     'goal_dist',
@@ -250,7 +252,7 @@ def get_exp3_at__exp3_mt():
     exp3_at['nav_mindist_timestep_Z'] = utils.zscore(exp3_at['nav_mindist_timestep'])
     exp3_at = exp3_at.merge(model_preds)
     exp3_at['near'] = (exp3_at['optpolicy_dist'] <= exp3_at['optpolicy_dist'].median())
-    exp3_at['relevant'] = exp3_at['vgc_weight'] >= .5
+    exp3_at['relevant'] = exp3_at['static_vgc_weight'] >= .5
     exp3_at['critical'] = ~exp3_at['near'] & exp3_at['relevant']
     exp3_at['obs_type'] = exp3_at.apply(lambda r: 'irrel' if not r['relevant'] else 'crit' if r['critical'] else 'none', axis=1)
 
@@ -268,7 +270,7 @@ def get_exp3_at__exp3_mt():
     exp3_mt['nav_mindist_timestep_Z'] = utils.zscore(exp3_mt['nav_mindist_timestep'])
     exp3_mt = exp3_mt.merge(model_preds)
     exp3_mt['near'] = (exp3_mt['optpolicy_dist'] <= exp3_mt['optpolicy_dist'].median())
-    exp3_mt['relevant'] = exp3_mt['vgc_weight'] >= .5
+    exp3_mt['relevant'] = exp3_mt['static_vgc_weight'] >= .5
     exp3_mt['critical'] = ~exp3_mt['near'] & exp3_mt['relevant']
     exp3_mt['obs_type'] = exp3_mt.apply(lambda r: 'irrel' if not r['relevant'] else 'crit' if r['critical'] else 'none', axis=1)
     
