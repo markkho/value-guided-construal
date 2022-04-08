@@ -143,7 +143,7 @@ cython_debug/
 participants.db
 */_cache
 **/_cache
-**/_analysiscache
+**/_analysiscache*
 
 experiments/credentials.json
 **/data/*.json
@@ -154,6 +154,7 @@ analyses/extended_data
 analyses/figures
 analyses/inputs
 analyses/results
+analyses/dvgc-gridsearch/**/*.json
 experiments/**/*config.json
 
 # make an exception for the psiturk static lib directory
