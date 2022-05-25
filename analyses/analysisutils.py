@@ -30,6 +30,8 @@ sem = lambda c: np.std(c)/np.sqrt(np.sum(c != np.nan))
 
 predictor_names = {
     'vgc_weight': 'Value Guided Construal',
+    'dynamic_vgc_weight': 'Value Guided Construal',
+    'static_vgc_weight': 'Value Guided Construal',
     'log_traj_based_hitcount': "Trajectory-based Heuristic Search",
     'graph_based_hitcount': "Graph-based Heuristic Search",
     'goal_dist': "Distance to Goal",
@@ -44,6 +46,8 @@ predictor_names = {
 }
 short_predictor_names = {
     'vgc_weight': 'VGC',
+    'dynamic_vgc_weight': 'VGC',
+    'static_vgc_weight': 'VGC',
     'log_traj_based_hitcount': "Traj HS",
     'graph_based_hitcount': "Graph HS",
     'goal_dist': "Goal Dist",

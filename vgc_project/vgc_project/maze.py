@@ -24,7 +24,8 @@ class Maze(GridMDP, TabularMarkovDecisionProcess):
         discount_rate=1.0,
         include_action_effect=True,
         include_wall_effect=True,
-        include_terminal_state_effect=True
+        include_terminal_state_effect=True,
+        wall_bias=0.
     ):
         """
         An optimized gridworld implementation with additional parameters
@@ -35,6 +36,7 @@ class Maze(GridMDP, TabularMarkovDecisionProcess):
         assert 0 <= wall_block_prob <= 1.0
         assert 0 <= success_prob <= 1.0
         assert 0 <= discount_rate <= 1.0
+        assert wall_bias >= 0
 
         if isinstance(tile_array, (tuple, list)):
             grid = '\n'.join(tile_array)
@@ -49,6 +51,7 @@ class Maze(GridMDP, TabularMarkovDecisionProcess):
         self.discount_rate = discount_rate
         self.step_cost = step_cost
         self.wall_bump_cost = wall_bump_cost
+        self.wall_bias = wall_bias
 
         if feature_rewards is None:
             feature_rewards = {}
@@ -70,7 +73,8 @@ class Maze(GridMDP, TabularMarkovDecisionProcess):
 
     def next_state_dist(self, s, a):
         ns_probs = self.transition_matrix[self._state_index[s], self._action_index[a], :]
-        return DictDistribution({ns: p for ns, p in zip(self.state_list, ns_probs) if p > 0})
+        return DictDistribution({self._state_list[i]: ns_probs[i] for i in ns_probs.nonzero()[0]})
+        # return DictDistribution({ns: p for ns, p in zip(self.state_list, ns_probs) if p > 0})
 
     def initial_state_dist(self):
         return DictDistribution.uniform(self._initial_states)
@@ -83,7 +87,7 @@ class Maze(GridMDP, TabularMarkovDecisionProcess):
         ]
 
     def actions(self, s):
-        return self.action_list
+        return self._action_list
 
     def is_terminal(self, s):
         return self.feature_at(s) in self.absorbing_features
@@ -129,8 +133,10 @@ class Maze(GridMDP, TabularMarkovDecisionProcess):
         include_wall_effect,
         include_terminal_state_effect
     ):
-        ss = self.state_list
-        aa = self.action_list
+        ss = self._state_list
+        aa = self._action_list
+        center = np.array([(self._width - 1)/2, (self._height - 1)/2])
+        max_center_dist = center.sum()
 
         # default transition potential
         tf_logits = np.ones((len(ss), len(aa), len(ss)))
@@ -147,12 +153,18 @@ class Maze(GridMDP, TabularMarkovDecisionProcess):
                 tf_logits[si, ai, si] = np.log(1 - move_prob)
                 tf_logits[si, ai, nsi] = np.log(move_prob)
                 rf[si, ai, si] += step_cost
-                rf[si, ai, nsi] += step_cost
+                if si != nsi:
+                    rf[si, ai, nsi] += step_cost
 
             if include_wall_effect and not self.is_wall(s) and self.is_wall(ns):
                 tf_logits[si, ai, si] += np.log(wall_block_prob)
                 tf_logits[si, ai, nsi] += np.log(1 - wall_block_prob)
                 rf[si, ai, si] += wall_bump_cost
+            
+            if self.wall_bias > 0.:
+                wall_bias_reward = np.abs(center - s).sum() - max_center_dist
+                rf[si, ai, si] += wall_bias_reward*self.wall_bias
+                rf[si, ai, nsi] += wall_bias_reward*self.wall_bias
         assert not np.isnan(tf_logits).any()
 
         nt = self.nonterminal_state_vec.astype(bool)
