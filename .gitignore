@@ -157,5 +157,6 @@ analyses/results
 analyses/dvgc-gridsearch/**/*.json
 experiments/**/*config.json
 
-# make an exception for the psiturk static lib directory
+# make an exception for the psiturk static lib directory and images
 !experiment.psiturkapp/static/lib/
+!experiment.psiturkapp/static/images/*.png
